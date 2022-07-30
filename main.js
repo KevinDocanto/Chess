@@ -11,7 +11,7 @@ let pawn_white_y = 335;
 let pawn_black_x = 0;
 let pawn_black_y = 60;
 
-displayPieces = function (pieces, img, x, y) {
+let displayPieces = function (pieces, img, x, y) {
   for (let i = 0; i < pieces.length; i++) {
     white_pawns[i] = new Pawn(img, x, y);
     x += 55;
