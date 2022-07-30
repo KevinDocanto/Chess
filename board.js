@@ -16,9 +16,9 @@ export class Board extends Tile {
         this.x = 5;
         this.y += 55;
         if (count_row % 2 == 0) {
-          this.color(this.ctx, 'gray');
+          this.color(this.ctx, '#EBECD0');
         } else {
-          this.color(this.ctx, 'purple');
+          this.color(this.ctx, '#779556');
         }
         count_row += 1;
         this.x += 55;
@@ -26,9 +26,9 @@ export class Board extends Tile {
       }
 
       if (j % 2 == 0) {
-        this.color(this.ctx, 'gray');
+        this.color(this.ctx, '#EBECD0');
       } else {
-        this.color(this.ctx, 'purple');
+        this.color(this.ctx, '#779556');
       }
 
       this.x += 55;
