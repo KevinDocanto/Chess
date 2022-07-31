@@ -1,7 +1,5 @@
-# Chess
+# Regular Chess Game (In progress)
  
-Regular chess game
-
 Short-term objectives:
 Able to play locally against another player.
 
