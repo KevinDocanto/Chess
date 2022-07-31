@@ -1,15 +1,15 @@
 import { Piece } from './piece.js';
 
-export class King extends Piece {
+export class Bishop extends Piece {
   constructor(color) {
     super();
     if (color === 'black') {
-      this.x = 220;
+      this.x = 110;
       this.y = 5;
     } else {
-      this.x = 220;
+      this.x = 110;
       this.y = 390;
     }
-    this.src = `./img/${color}_king.png`;
+    this.src = `./img/${color}_bishop.png`;
   }
 }

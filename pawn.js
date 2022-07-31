@@ -1,10 +1,15 @@
 import { Piece } from './piece.js';
 
 export class Pawn extends Piece {
-  constructor(img, x, y) {
+  constructor(color) {
     super();
-    this.x = x;
-    this.y = y;
-    this.displayPiece(img, this.x, this.y);
+    if (color === 'black') {
+      this.x = 200;
+      this.y = 300;
+    } else {
+      this.x = 200;
+      this.y = 5;
+    }
+    this.src = `./img/${color}_pawn.png`;
   }
 }
