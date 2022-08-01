@@ -1,15 +1,15 @@
 import { Piece } from './piece.js';
 
-export class Pawn extends Piece {
+export class Rook extends Piece {
   constructor(color) {
     super();
     if (color === 'black') {
       this.x = 0;
-      this.y = 60;
+      this.y = 5;
     } else {
       this.x = 0;
-      this.y = 335;
+      this.y = 390;
     }
-    this.src = `./img/${color}_pawn.png`;
+    this.src = `./img/${color}_rook.png`;
   }
 }
