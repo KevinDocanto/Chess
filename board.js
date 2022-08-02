@@ -3,36 +3,29 @@ import { Tile } from './tile.js';
 export class Board extends Tile {
   constructor() {
     super();
-    this.len = 64;
     this.canvas = document.querySelector('canvas');
     this.ctx = this.canvas.getContext('2d');
+    this.rows = 8;
+    this.cols = 8;
+    this.len = this.rows * this.cols;
+    this.width = this.canvas.width;
+    this.height = this.canvas.height;
+    this.lightCellColor = '#ddb180';
+    this.darkCellColor = '#7c330c';
+    this.tiles = new Array(this.len);
     this.createBoard();
   }
 
   createBoard() {
-    let count_row = 1;
-    for (let i = 0, j = 0; i < this.len; i++) {
-      if (i > 0 && i % 8 == 0) {
-        this.x = 5;
-        this.y += 55;
-        if (count_row % 2 == 0) {
-          this.color(this.ctx, '#EBECD0');
-        } else {
-          this.color(this.ctx, '#779556');
-        }
-        count_row += 1;
-        this.x += 55;
-        continue;
+    let delta = this.width / this.cols;
+    for (let i = 1; i <= this.rows; i++) {
+      for (let j = 1; j <= this.cols; j++) {
+        this.ctx.fillStyle =
+          (i + j) % 2 == 0 ? this.lightCellColor : this.darkCellColor;
+        this.ctx.fillRect(delta * (i - 1), delta * (j - 1), delta, delta);
+        this.tiles[i - 1] = [delta * (i - 1), delta * (j - 1)];
+        console.log(this.tiles[i - 1]);
       }
-
-      if (j % 2 == 0) {
-        this.color(this.ctx, '#EBECD0');
-      } else {
-        this.color(this.ctx, '#779556');
-      }
-
-      this.x += 55;
-      j += 1;
     }
   }
 }

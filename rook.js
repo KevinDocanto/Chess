@@ -5,10 +5,10 @@ export class Rook extends Piece {
     super();
     if (color === 'black') {
       this.x = 0;
-      this.y = 5;
+      this.y = 0;
     } else {
       this.x = 0;
-      this.y = 390;
+      this.y = 395;
     }
     this.src = `./img/${color}_rook.png`;
   }
