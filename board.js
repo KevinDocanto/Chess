@@ -12,7 +12,7 @@ export class Board extends Tile {
     this.height = this.canvas.height;
     this.lightCellColor = '#ddb180';
     this.darkCellColor = '#7c330c';
-    this.tiles = new Array(this.len);
+    this.tiles = [];
     this.createBoard();
   }
 
@@ -23,8 +23,7 @@ export class Board extends Tile {
         this.ctx.fillStyle =
           (i + j) % 2 == 0 ? this.lightCellColor : this.darkCellColor;
         this.ctx.fillRect(delta * (i - 1), delta * (j - 1), delta, delta);
-        this.tiles[i - 1] = [delta * (i - 1), delta * (j - 1)];
-        console.log(this.tiles[i - 1]);
+        this.tiles.push({ x: delta * (i - 1), y: delta * (j - 1) });
       }
     }
   }

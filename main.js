@@ -10,8 +10,8 @@ import { Rook } from './rook.js';
 const board = new Board();
 
 // Keep track of white and black team
-const white_team = new Array(16);
-const black_team = new Array(16);
+const white_team = [];
+const black_team = [];
 
 // King pieces
 const white_king = [new King('white')];
@@ -89,29 +89,46 @@ let displayPieces = function (pieces) {
   }
 };
 
-// Append pieces to their respective teams
-let team_append = function (team, pieces) {
-  for (let i = 0; i < pieces.length; i++) {
-    if (team[i] == null) {
-      team[i] = pieces;
-      break;
+// Keep track of pieces position
+let pieces_positions = function (board_tiles, pieces) {
+  let count = 0;
+  for (let i = 0; i < board_tiles.length; i++) {
+    for (let j = 0; j < pieces.length; j++) {
+      for (let k = 0; k < pieces[j].length; k++) {
+        if (
+          board_tiles[i].x - pieces[j][k].x < 6 &&
+          board_tiles[i].x - pieces[j][k].x > -6 &&
+          board_tiles[i].y - pieces[j][k].y < 6 &&
+          board_tiles[i].y - pieces[j][k].y > -6
+        ) {
+          console.log(pieces[j][k]);
+          console.log(board_tiles[i].x - pieces[j][k].x);
+          console.log(pieces[j][k].y - pieces[j][k].y);
+          count += 1;
+        }
+      }
     }
   }
+  console.log(count);
 };
+
+// Add pieces to their respective teams
+white_team.push(white_king);
+white_team.push(white_queen);
+white_team.push(white_knights);
+white_team.push(white_rooks);
+white_team.push(white_pawns);
+
+black_team.push(black_king);
+black_team.push(black_queen);
+black_team.push(black_bishops);
+black_team.push(black_knights);
+black_team.push(black_rooks);
+black_team.push(black_pawns);
 
 // Function calls
 pawn_position(white_pawns);
 pawn_position(black_pawns);
-
-team_append(white_team, white_king);
-team_append(white_team, white_queen);
-team_append(white_team, white_bishops);
-team_append(white_team, white_pawns);
-
-team_append(black_team, black_king);
-team_append(black_team, black_queen);
-team_append(black_team, black_bishops);
-team_append(black_team, black_pawns);
 
 displayPieces(white_king);
 displayPieces(white_queen);
@@ -126,3 +143,6 @@ displayPieces(black_bishops);
 displayPieces(black_knights);
 displayPieces(black_rooks);
 displayPieces(black_pawns);
+
+pieces_positions(board.tiles, white_team);
+pieces_positions(board.tiles, black_team);
