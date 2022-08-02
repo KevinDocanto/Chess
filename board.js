@@ -24,6 +24,7 @@ export class Board extends Tile {
           (i + j) % 2 == 0 ? this.lightCellColor : this.darkCellColor;
         this.ctx.fillRect(delta * (i - 1), delta * (j - 1), delta, delta);
         this.tiles.push({ x: delta * (i - 1), y: delta * (j - 1) });
+        console.log(this.tiles[i]);
       }
     }
   }

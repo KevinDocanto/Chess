@@ -113,6 +113,7 @@ let pieces_positions = function (board_tiles, pieces) {
 // Add pieces to their respective teams
 white_team.push(white_king);
 white_team.push(white_queen);
+white_team.push(white_bishops);
 white_team.push(white_knights);
 white_team.push(white_rooks);
 white_team.push(white_pawns);
