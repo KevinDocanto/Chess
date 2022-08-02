@@ -91,7 +91,6 @@ let displayPieces = function (pieces) {
 
 // Keep track of pieces position
 let pieces_positions = function (board_tiles, pieces) {
-  let count = 0;
   for (let i = 0; i < board_tiles.length; i++) {
     for (let j = 0; j < pieces.length; j++) {
       for (let k = 0; k < pieces[j].length; k++) {
@@ -99,15 +98,10 @@ let pieces_positions = function (board_tiles, pieces) {
           Math.abs(board_tiles[i].x - pieces[j][k].x) < 6 &&
           Math.abs(board_tiles[i].y - pieces[j][k].y) < 6
         ) {
-          console.log(pieces[j][k]);
-          console.log(board_tiles[i].x - pieces[j][k].x);
-          console.log(pieces[j][k].y - board_tiles[i].y);
-          count += 1;
         }
       }
     }
   }
-  console.log(count);
 };
 
 // Add pieces to their respective teams
@@ -124,6 +118,44 @@ black_team.push(black_bishops);
 black_team.push(black_knights);
 black_team.push(black_rooks);
 black_team.push(black_pawns);
+
+const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext('2d');
+
+let change_color = function (board_tiles, mouse_x, mouse_y) {
+  for (let i = 0; i < board_tiles.length; i++) {
+    if (
+      Math.abs(board_tiles[i].x - mouse_x) < 60 &&
+      Math.abs(board_tiles[i].y - mouse_y) < 60
+    ) {
+      console.log('board x: ' + board_tiles[i].x + ' mouse x: ' + mouse_x);
+      console.log('board y: ' + board_tiles[i].y + ' mouse y: ' + mouse_y);
+
+      ctx.fillStyle = 'rgba(128, 128, 128, 0.419)';
+      ctx.fillRect(
+        board_tiles[i].x,
+        board.tiles[i].y,
+        board.tile_size,
+        board.tile_size
+      );
+
+      break;
+    }
+  }
+};
+
+// Get the coordinate of when mouse was clicked
+function getCursorPosition(canvas, event) {
+  const rect = canvas.getBoundingClientRect();
+  let x = event.clientX - rect.left;
+  let y = event.clientY - rect.top;
+  console.log(x, y);
+  change_color(board.tiles, x, y);
+}
+
+canvas.addEventListener('mousedown', function (e) {
+  getCursorPosition(canvas, e);
+});
 
 // Function calls
 pawn_position(white_pawns);

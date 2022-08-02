@@ -1,8 +1,5 @@
-import { Tile } from './tile.js';
-
-export class Board extends Tile {
+export class Board {
   constructor() {
-    super();
     this.canvas = document.querySelector('canvas');
     this.ctx = this.canvas.getContext('2d');
     this.rows = 8;
@@ -13,7 +10,9 @@ export class Board extends Tile {
     this.lightCellColor = '#ddb180';
     this.darkCellColor = '#7c330c';
     this.tiles = [];
+    this.tile_size = this.width / this.cols;
     this.createBoard();
+    console.log(this.width / 8);
   }
 
   createBoard() {
