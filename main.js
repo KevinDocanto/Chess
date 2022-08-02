@@ -96,14 +96,12 @@ let pieces_positions = function (board_tiles, pieces) {
     for (let j = 0; j < pieces.length; j++) {
       for (let k = 0; k < pieces[j].length; k++) {
         if (
-          board_tiles[i].x - pieces[j][k].x < 6 &&
-          board_tiles[i].x - pieces[j][k].x > -6 &&
-          board_tiles[i].y - pieces[j][k].y < 6 &&
-          board_tiles[i].y - pieces[j][k].y > -6
+          Math.abs(board_tiles[i].x - pieces[j][k].x) < 6 &&
+          Math.abs(board_tiles[i].y - pieces[j][k].y) < 6
         ) {
           console.log(pieces[j][k]);
           console.log(board_tiles[i].x - pieces[j][k].x);
-          console.log(pieces[j][k].y - pieces[j][k].y);
+          console.log(pieces[j][k].y - board_tiles[i].y);
           count += 1;
         }
       }
