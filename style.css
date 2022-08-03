@@ -2,18 +2,26 @@
   box-sizing: border-box;
 }
 
-html,
-body {
-  height: 100%;
+#container {
+  width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.container {
+#board {
   display: flex;
-  height: 100%;
+  width: 100%;
   justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
 }
 
-canvas {
-  border: black solid 5px;
+#board div {
+  width: 75px;
+  height: 75px;
+  text-align: center;
+}
+
+div img {
+  width: 75px;
+  z-index: 99999;
 }

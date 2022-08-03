@@ -1,29 +1,26 @@
 export class Board {
   constructor() {
-    this.canvas = document.querySelector('canvas');
-    this.ctx = this.canvas.getContext('2d');
     this.rows = 8;
     this.cols = 8;
     this.len = this.rows * this.cols;
-    this.width = this.canvas.width;
-    this.height = this.canvas.height;
     this.lightCellColor = '#ddb180';
     this.darkCellColor = '#7c330c';
     this.tiles = [];
-    this.tile_size = this.width / this.cols;
-    this.createBoard();
-    console.log(this.width / 8);
+    this.init();
   }
 
-  createBoard() {
-    let delta = this.width / this.cols;
+  // Initialize board
+  init() {
+    let board = document.getElementById('board');
     for (let i = 1; i <= this.rows; i++) {
       for (let j = 1; j <= this.cols; j++) {
-        this.ctx.fillStyle =
+        let tile = document.createElement('div');
+        tile.setAttribute('id', `${i}_${j}`);
+        tile.style.backgroundColor =
           (i + j) % 2 == 0 ? this.lightCellColor : this.darkCellColor;
-        this.ctx.fillRect(delta * (i - 1), delta * (j - 1), delta, delta);
-        this.tiles.push({ x: delta * (i - 1), y: delta * (j - 1) });
-        console.log(this.tiles[i]);
+
+        this.tiles.push(tile);
+        board.appendChild(tile);
       }
     }
   }

@@ -17,27 +17,25 @@ const black_team = [];
 const white_king = [new King('white')];
 const black_king = [new King('black')];
 
+// King start position
+let white_king_pos = 4;
+let black_king_pos = 60;
+
 // Queen pieces
 const white_queen = [new Queen('white')];
 const black_queen = [new Queen('black')];
 
 // Bishop pieces
 const white_bishops = [new Bishop('white'), new Bishop('white')];
-white_bishops[1].x = 275;
 const black_bishops = [new Bishop('black'), new Bishop('black')];
-black_bishops[1].x = 275;
 
 // Knight pieces
 const white_knights = [new Knight('white'), new Knight('white')];
-white_knights[1].x = 330;
 const black_knights = [new Knight('black'), new Knight('black')];
-black_knights[1].x = 330;
 
 // Rook pieces
 const white_rooks = [new Rook('white'), new Rook('white')];
-white_rooks[1].x = 385;
 const black_rooks = [new Rook('black'), new Rook('black')];
-black_rooks[1].x = 385;
 
 // Pawn pieces
 const white_pawns = [
@@ -62,46 +60,25 @@ const black_pawns = [
   new Pawn('black'),
 ];
 
-// Display each pawn in their initial position
-let pawn_position = function (pawns) {
-  let acc = 55;
-  for (let i = 1; i < pawns.length; i++) {
-    pawns[i].x += acc;
-    acc += 55;
+// Pawns start position
+let white_pawn_start_pos = 8;
+let white_pawn_end_pos = 16;
+
+let black_pawn_start_pos = 48;
+let black_pawn_end_pos = 56;
+
+// Display group pieces like pawns
+let display_group_pieces = function (pieces, startPosition, endPosition) {
+  let i = 0;
+  while (startPosition < endPosition) {
+    pieces[i].insertPiece(board.tiles[startPosition++]);
+    i += 1;
   }
 };
 
-// Draw piece to canvas
-let createImg = function (piece) {
-  let img = new Image();
-  img.src = piece.src;
-  img.width = piece.w;
-  img.height = piece.h;
-  img.onload = function () {
-    board.ctx.drawImage(img, piece.x, piece.y, img.width, img.height);
-  };
-};
-
-// Display pieces on board
-let displayPieces = function (pieces) {
-  for (let i = 0; i < pieces.length; i++) {
-    createImg(pieces[i]);
-  }
-};
-
-// Keep track of pieces position
-let pieces_positions = function (board_tiles, pieces) {
-  for (let i = 0; i < board_tiles.length; i++) {
-    for (let j = 0; j < pieces.length; j++) {
-      for (let k = 0; k < pieces[j].length; k++) {
-        if (
-          Math.abs(board_tiles[i].x - pieces[j][k].x) < 6 &&
-          Math.abs(board_tiles[i].y - pieces[j][k].y) < 6
-        ) {
-        }
-      }
-    }
-  }
+// Display unique and pair pieces
+let display_pair_pieces = function (piece, startPosition) {
+  piece.insertPiece(board.tiles[startPosition]);
 };
 
 // Add pieces to their respective teams
@@ -119,61 +96,39 @@ black_team.push(black_knights);
 black_team.push(black_rooks);
 black_team.push(black_pawns);
 
-const canvas = document.querySelector('canvas');
-const ctx = canvas.getContext('2d');
+// Function calls
+display_pair_pieces(white_king[0], white_king_pos);
+display_pair_pieces(black_king[0], black_king_pos);
+display_pair_pieces(white_queen[0], white_king_pos - 1);
+display_pair_pieces(black_queen[0], black_king_pos - 1);
+display_pair_pieces(white_bishops[0], white_king_pos - 2);
+display_pair_pieces(white_bishops[1], white_king_pos + 1);
+display_pair_pieces(black_bishops[0], black_king_pos - 2);
+display_pair_pieces(black_bishops[1], black_king_pos + 1);
+display_pair_pieces(white_knights[0], white_king_pos - 3);
+display_pair_pieces(white_knights[1], white_king_pos + 2);
+display_pair_pieces(black_knights[0], black_king_pos - 3);
+display_pair_pieces(black_knights[0], black_king_pos + 2);
+display_pair_pieces(white_rooks[0], white_king_pos - 4);
+display_pair_pieces(white_rooks[1], white_king_pos + 3);
+display_pair_pieces(black_rooks[0], black_king_pos - 4);
+display_pair_pieces(black_rooks[0], black_king_pos + 3);
 
-let change_color = function (board_tiles, mouse_x, mouse_y) {
-  for (let i = 0; i < board_tiles.length; i++) {
-    if (
-      Math.abs(board_tiles[i].x - mouse_x) < 60 &&
-      Math.abs(board_tiles[i].y - mouse_y) < 60
-    ) {
-      console.log('board x: ' + board_tiles[i].x + ' mouse x: ' + mouse_x);
-      console.log('board y: ' + board_tiles[i].y + ' mouse y: ' + mouse_y);
+display_group_pieces(white_pawns, white_pawn_start_pos, white_pawn_end_pos);
+display_group_pieces(black_pawns, black_pawn_start_pos, black_pawn_end_pos);
 
-      ctx.fillStyle = 'rgba(128, 128, 128, 0.419)';
-      ctx.fillRect(
-        board_tiles[i].x,
-        board.tiles[i].y,
-        board.tile_size,
-        board.tile_size
-      );
-
-      break;
-    }
+// Event handlers
+function select_tile(tiles) {
+  for (let i = 0; i < tiles.length; i++) {
+    tiles[i].addEventListener(
+      'click',
+      function (e) {
+        e.preventDefault();
+        tiles[i].style.backgroundColor = 'rgba(128, 128, 128, 0.406)';
+      },
+      false
+    );
   }
-};
-
-// Get the coordinate of when mouse was clicked
-function getCursorPosition(canvas, event) {
-  const rect = canvas.getBoundingClientRect();
-  let x = event.clientX - rect.left;
-  let y = event.clientY - rect.top;
-  console.log(x, y);
-  change_color(board.tiles, x, y);
 }
 
-canvas.addEventListener('mousedown', function (e) {
-  getCursorPosition(canvas, e);
-});
-
-// Function calls
-pawn_position(white_pawns);
-pawn_position(black_pawns);
-
-displayPieces(white_king);
-displayPieces(white_queen);
-displayPieces(white_bishops);
-displayPieces(white_knights);
-displayPieces(white_rooks);
-displayPieces(white_pawns);
-
-displayPieces(black_king);
-displayPieces(black_queen);
-displayPieces(black_bishops);
-displayPieces(black_knights);
-displayPieces(black_rooks);
-displayPieces(black_pawns);
-
-pieces_positions(board.tiles, white_team);
-pieces_positions(board.tiles, black_team);
+select_tile(board.tiles);
