@@ -11,4 +11,4 @@
 
 • Able to play online against another player.
 
-• Able to play against a computer.
+• Able to play against AI.
