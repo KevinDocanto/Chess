@@ -24,4 +24,5 @@
 div img {
   width: 75px;
   z-index: 99999;
+  color: rgba(225, 183, 134, 0.623);
 }

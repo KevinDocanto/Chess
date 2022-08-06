@@ -1,19 +1,29 @@
 import { Piece } from './piece.js';
 
 export class Pawn extends Piece {
-  static white = 0;
-  static black = 0;
+  static id = 0;
   constructor(color) {
     super();
-    if (color === 'black') {
-      this.x = 0;
-      this.y = 60;
-      this.counter = `pawn_${color}` + ++Pawn.black;
-    } else {
-      this.x = 0;
-      this.y = 335;
-      this.counter = `pawn_${color}` + ++Pawn.white;
-    }
+    this.id = Pawn.id++;
     this.src = `./img/${color}_pawn.png`;
+  }
+
+  moves(currentPosition, color) {
+    let row = parseInt(currentPosition[0]);
+    let col = parseInt(currentPosition[2]);
+
+    let possible_moves = {};
+
+    if (color === 'white') {
+      possible_moves[row - 1] = [col];
+      possible_moves[row - 2] = [col];
+    } else {
+      possible_moves[row + 1] = [col];
+      possible_moves[row + 2] = [col];
+    }
+
+    console.log(possible_moves);
+
+    return possible_moves;
   }
 }

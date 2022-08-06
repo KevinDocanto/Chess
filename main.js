@@ -18,8 +18,8 @@ const white_king = [new King('white')];
 const black_king = [new King('black')];
 
 // King start position
-let white_king_pos = 4;
-let black_king_pos = 60;
+let white_king_pos = 60;
+let black_king_pos = 4;
 
 // Queen pieces
 const white_queen = [new Queen('white')];
@@ -61,11 +61,11 @@ const black_pawns = [
 ];
 
 // Pawns start position
-let white_pawn_start_pos = 8;
-let white_pawn_end_pos = 16;
+let white_pawn_start_pos = 48;
+let white_pawn_end_pos = 56;
 
-let black_pawn_start_pos = 48;
-let black_pawn_end_pos = 56;
+let black_pawn_start_pos = 8;
+let black_pawn_end_pos = 16;
 
 // Display group pieces like pawns
 let display_group_pieces = function (pieces, startPosition, endPosition) {
@@ -117,18 +117,87 @@ display_pair_pieces(black_rooks[0], black_king_pos + 3);
 display_group_pieces(white_pawns, white_pawn_start_pos, white_pawn_end_pos);
 display_group_pieces(black_pawns, black_pawn_start_pos, black_pawn_end_pos);
 
-// Event handlers
-function select_tile(tiles) {
-  for (let i = 0; i < tiles.length; i++) {
-    tiles[i].addEventListener(
-      'click',
-      function (e) {
-        e.preventDefault();
-        tiles[i].style.backgroundColor = 'rgba(128, 128, 128, 0.406)';
-      },
-      false
-    );
+function pieceType(piece, tile) {
+  let piece_type = piece.id.substring(
+    piece.id.indexOf('_') + 1,
+    piece.id.lastIndexOf('_')
+  );
+  let piece_color = piece.id.substring(piece.id[0], piece.id.indexOf('_'));
+  if (piece_type === 'king') {
+    if (piece_color === 'white') {
+      let white_king = new King('white');
+      return white_king.moves(tile.id);
+    } else {
+      let black_king = new King('black');
+      return black_king.moves(tile.id);
+    }
+  } else if (piece_type === 'queen') {
+    if (piece_color === 'white') {
+      let white_queen = new Queen('white');
+      return white_queen.moves(tile.id);
+    } else {
+      let black_queen = new Queen('black');
+      return black_queen.moves(tile.id);
+    }
+  } else if (piece_type === 'bishop') {
+    if (piece_color === 'white') {
+      let white_bishop = new Bishop('white');
+      return white_bishop.moves(tile.id);
+    } else {
+      let black_bishop = new Bishop('black');
+      return black_bishop.moves(tile.id);
+    }
+  } else if (piece_type === 'knight') {
+    if (piece_color === 'white') {
+      let white_knight = new Knight('white');
+      return white_knight.moves(tile.id);
+    } else {
+      let black_bishop = new Knight('black');
+      return black_bishop.moves(tile.id);
+    }
+  } else if (piece_type === 'rook') {
+    if (piece_color === 'white') {
+      let white_rook = new Rook('white');
+      return white_rook.moves(tile.id);
+    } else {
+      let black_rook = new Rook('black');
+      return black_rook.moves(tile.id);
+    }
+  } else {
+    if (piece_type === 'pawn') {
+      let white_pawn = new Pawn('white');
+      return white_pawn.moves(tile.id, 'white');
+    } else {
+      let black_pawn = new Pawn('black');
+      return black_pawn.moves(tile.id, 'black');
+    }
   }
 }
+
+function allowedMoves(piece) {
+  let piece_id = piece.id.substring(piece.length - 1);
+
+  for (const [key, value] of Object.entries(piece)) {
+  }
+}
+
+// Highlights a tile when cliking
+let select_tile = function (tiles) {
+  for (let i = 0; i < tiles.length; i++) {
+    if (tiles[i].hasChildNodes()) {
+      tiles[i].addEventListener(
+        'click',
+        function (e) {
+          let getPiece = pieceType(tiles[i].firstChild, tiles[i]);
+          let allowed_moves = allowedMoves(getPiece);
+
+          e.preventDefault();
+          tiles[i].style.backgroundColor = 'rgba(225, 183, 134, 0.723)';
+        },
+        false
+      );
+    }
+  }
+};
 
 select_tile(board.tiles);

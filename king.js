@@ -1,16 +1,21 @@
 import { Piece } from './piece.js';
 
 export class King extends Piece {
-  static white = 0;
-  static black = 0;
-
+  static id = 0;
   constructor(color) {
     super();
-    if (color === 'black') {
-      this.counter = `king_${color}` + ++King.black;
-    } else {
-      this.counter = `king_${color}` + ++King.white;
-    }
+    this.id = King.id++;
     this.src = `./img/${color}_king.png`;
+  }
+
+  moves(currentPosition) {
+    let row = parseInt(currentPosition[0]);
+    let col = parseInt(currentPosition[2]);
+
+    let possible_moves = {};
+
+    possible_moves[row - 1] = [col, col + 1, col - 1];
+    possible_moves[row] = [col + 1, col - 1];
+    possible_moves[row + 1] = [col, col + 1, col - 1];
   }
 }

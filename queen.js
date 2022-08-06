@@ -1,20 +1,21 @@
 import { Piece } from './piece.js';
 
 export class Queen extends Piece {
-  static white = 0;
-  static black = 0;
-
+  static id = 0;
   constructor(color) {
     super();
-    if (color === 'black') {
-      this.x = 165;
-      this.y = 0;
-      this.counter = `queen_${color}` + ++Queen.black;
-    } else {
-      this.x = 165;
-      this.y = 395;
-      this.counter = `queen_${color}` + ++Queen.white;
-    }
+    this.id = Queen.id++;
     this.src = `./img/${color}_queen.png`;
+  }
+
+  moves(currentPosition) {
+    let row = parseInt(currentPosition[0]);
+    let col = parseInt(currentPosition[2]);
+
+    let possible_moves = {};
+
+    possible_moves[row - 1] = [col, col + 1, col - 1];
+    possible_moves[row] = [col + 1, col - 1];
+    possible_moves[row + 1] = [col, col + 1, col - 1];
   }
 }
